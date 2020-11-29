@@ -123,4 +123,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # STATICFILES_DIRS = ['static']
-STATICFILES_ROOT = '/home/ChaseTSchool/chasetschool.pythonanywhere.com/static'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
