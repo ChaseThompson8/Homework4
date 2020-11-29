@@ -1,0 +1,55 @@
+{% extends 'todo/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    To-do-list
+{% endblock %}
+
+
+{% block body %}
+    <form action="{% url 'add' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3 " id="custom">
+            {{ form.description }}
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary" id="button-addon2">ADD</button>
+            </div>
+        </div>
+    </form>
+
+        <div class="container">
+            {% for task in tasks %}
+                {% if task.complete == True %}
+                    <div id="completeRow" class="row">
+                {% else %}
+                    <div id="rows" class="row">
+                {% endif %}
+                    <div id="task" class="col-md-6 py-3">
+                        {% if task.complete == True %}
+                            <span id="cross">{{ task.description }} <br> <span id="created">{{ task.created_at }}</span></span>
+                        {% else %}
+                            <span id="uncross">{{ task.description }} <br> <span id="created">{{ task.created_at }}</span></span>
+                        {% endif %}
+                    </div>
+                    <div id="buttons" class="col-md-6">
+                        {% if task.complete == False %}
+                            <a href="{% url 'complete' task.id %}">
+                                <button id="complete" type="button" class="btn btn-success">Complete</button>
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'update_task' task.id %}" class="update-icon">
+                            <button id="update" type="button" class="btn btn-primary">Update
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </a>
+                        <a href="{% url 'delete_task' task.id %}" class="delete-icon">
+                            <button id="delete" type="button" class="btn btn-danger">Delete
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+{% endblock %}

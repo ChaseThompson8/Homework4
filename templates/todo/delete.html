@@ -1,0 +1,29 @@
+{% extends 'todo/base.html' %}
+{% load crispy_forms_filters %}
+
+
+{% block title %}
+    Delete Task
+{% endblock %}
+
+{% block body %}
+
+    <form method="post" action="{% url 'delete_task' task.id %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="card">
+            <div class="card-header">
+                Delete Task
+            </div>
+            <div class="card-body">
+                <h4>Are you sure that you want to delete
+                    <span id="deleted">{{ task.description }}</span>?</h4>
+                <div id="confirmBtns">
+                    <a href="{% url 'view_list' %}" class="btn btn-info"><i class="fas fa-arrow-left"></i> No, go back</a>
+                    <button id="confirmDelete" type="submit" class="btn btn-danger">Yes, delete</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
